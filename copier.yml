@@ -27,4 +27,9 @@ terraform_resource_name:
   default: "lambda_function"
   description: "The name of the Terraform resource to create. This should not include the cloud in the name, just the resource type (e.g., 'lambda_function')."
 
-repo_name: "tf-{{ terraform_provider }}-module_{{ terraform_module_type }}-{{ terraform_resource_name }}"
+repo_name: "{{ "tf-{{ terraform_provider }}-module_{{ terraform_module_type }}-{{ terraform_resource_name }}" | lower }}"
+
+terraform_version:
+  type: str
+  default: "1.5.5"
+  description: "The version of Terraform to use for this module."

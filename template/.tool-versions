@@ -1,1 +1,7 @@
 pre-commit 3.3.3
+terraform {{ terraform_version }}
+conftest 0.44.1
+golang 1.22.10
+golangci-lint 1.63.4
+terraform-docs 0.16.0
+tflint 0.48.0
