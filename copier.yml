@@ -1,0 +1,30 @@
+_subdirectory: "template"
+_answers_file: ".copier-answers.yml"
+
+terraform_provider:
+  type: str
+  default: "aws"
+  choices:
+    aws: "aws"
+    azurerm: "azurerm"
+    azuread: "azuread"
+    azuredevops: "azuredevops"
+    azapi: "azapi"
+    azurestack: "azurestack"
+  description: "The Terraform provider to use for this module."
+
+terraform_module_type:
+  type: str
+  default: "primitive"
+  choices:
+    primitive: "primitive"
+    collection: "collection"
+    reference: "reference"
+  description: "The type of Terraform module to create. Primitive modules are single resources, collection modules are multiple resources, and reference modules are for referencing other modules."
+
+terraform_resource_name:
+  type: str
+  default: "lambda_function"
+  description: "The name of the Terraform resource to create. This should not include the cloud in the name, just the resource type (e.g., 'lambda_function')."
+
+repo_name: "tf-{{ terraform_provider }}-module_{{ terraform_module_type }}-{{ terraform_resource_name }}"
