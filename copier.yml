@@ -53,5 +53,5 @@ repo_name:
 
 terraform_version_major_minor:
   type: str
-  default: "{{ terraform_version | split(".")[:2] | join (".") }}"
+  default: "{{ terraform_version.split(".")[:2] | join(".") }}"
   when: false
