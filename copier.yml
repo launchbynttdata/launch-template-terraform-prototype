@@ -2,6 +2,8 @@ _subdirectory: "template"
 _answers_file: ".copier-answers.yml"
 _jinja_extensions:
   - jinja2_time.TimeExtension
+_skip_if_exists:
+  - .secrets.baseline
 _exclude:
   - "copier.yaml"
   - "copier.yml"
