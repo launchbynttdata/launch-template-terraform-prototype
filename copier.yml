@@ -14,10 +14,16 @@ _exclude:
   - ".DS_Store"
   - ".svn"
   - "_mixins"
+_tasks:
+  - "terraform-docs ."
+  - "git init"
+  - "go mod tidy"
+  - "pre-commit install"
+  - "make configure"
 
 terraform_provider:
   type: str
-  default: "hashicorp/aws"
+  default: "hashicorp/azurerm"
   choices:
     aws: "hashicorp/aws"
     azurerm: "hashicorp/azurerm"

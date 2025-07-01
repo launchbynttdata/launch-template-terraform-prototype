@@ -1,24 +1,24 @@
 {% if "reference" not in terraform_module_type -%}
 {%  if "hashicorp/aws" in terraform_provider -%}
 resource_names_map = {
-    bucket = {
-        name        = "bucket"
-        max_length  = 64
-        region      = "{{ terraform_provider_default_region[terraform_provider] }}"
-    }
+  bucket = {
+    name        = "bucket"
+    max_length  = 64
+    region      = "{{ terraform_provider_default_region[terraform_provider] }}"
+  }
 }
 {%  elif "hashicorp/azurerm" in terraform_provider -%}
 resource_names_map = {
-    storage_account = {
-        name        = "sa"
-        max_length  = 24
-        region      = "{{ terraform_provider_default_region[terraform_provider] }}"
-    },
-    resource_group = {
-        name        = "rg"
-        max_length  = 90
-        region      = "{{ terraform_provider_default_region[terraform_provider] }}"
-    }
+  storage_account = {
+    name       = "sa"
+    max_length = 24
+    region     = "{{ terraform_provider_default_region[terraform_provider] }}"
+  },
+  resource_group = {
+    name       = "rg"
+    max_length = 90
+    region     = "{{ terraform_provider_default_region[terraform_provider] }}"
+  }
 }
 {%  endif -%}
 {% endif -%}

@@ -23,7 +23,7 @@ module "resource_group" {
   version = "~> 1.0"
 
   name     = module.resource_names["resource_group"].minimal_random_suffix
-  location = "{{ terraform_provider_default_region }}"
+  location = "{{ terraform_provider_default_region[terraform_provider] }}"
   tags     = local.tags
 }
 {%  else %}
@@ -43,9 +43,10 @@ module "parent" {
   logical_product_service = var.logical_product_service
   resource_names_strategy = "minimal_random_suffix"
 {% elif "hashicorp/aws" in terraform_provider %}
-  bucket_name = module.resource_names["example"].minimal_random_suffix
+  bucket_name = module.resource_names["bucket"].minimal_random_suffix
 {% elif "hashicorp/azurerm" in terraform_provider %}
-  storage_account_name = module.resource_names["example"].minimal_random_suffix
-  resource_group_name = module.resource_group.name
+  storage_account_name = module.resource_names["storage_account"].minimal_random_suffix_without_any_separators
+  resource_group_name  = module.resource_group.name
+  location             = var.resource_names_map["storage_account"].region
 {% endif %}
 }

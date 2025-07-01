@@ -8,4 +8,12 @@ output "bucket_arn" {
 output "bucket_name" {
   value = aws_s3_bucket.example.id
 }
+{% elif "hashicorp/azurerm" in terraform_provider %}
+output "resource_group_name" {
+  value = azurerm_storage_account.example.resource_group_name
+}
+
+output "storage_account_name" {
+  value = azurerm_storage_account.example.name
+}
 {% endif %}

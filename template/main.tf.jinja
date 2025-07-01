@@ -9,7 +9,7 @@ module "resource_names" {
 
   for_each = var.resource_names_map
 
-  region                  = join("", split("-", data.aws_region.current.name))
+  region                  = join("", split("-", each.value.region))
   class_env               = var.class_env
   cloud_resource_type     = each.value.name
   instance_env            = var.instance_env
@@ -22,15 +22,15 @@ module "resource_names" {
 
 {% if "hashicorp/aws" in terraform_provider -%}
 resource "aws_s3_bucket" "example" {
-  bucket = {% if "reference" in terraform_module_type %}module.resource_names["example"].resource_name{% else %}var.bucket_name{% endif %}
+  bucket = {% if "reference" in terraform_module_type %}module.resource_names["example"][resource_names_strategy]{% else %}var.bucket_name{% endif %}
 
   tags = local.tags
 }
 {% elif "hashicorp/azure" in terraform_provider -%}
 resource "azurerm_storage_account" "example" {
-  name                     = module.resource_names["example"].resource_name
-  resource_group_name      = var.resource_group_name
-  location                 = var.location
+  name                     = {% if "reference" in terraform_module_type %}replace(module.resource_names["storage_account"][resource_names_strategy], "-", ""){% else %}var.storage_account_name{% endif %}
+  resource_group_name      = {% if "reference" in terraform_module_type %}module.resource_names["resource_group"][resource_names_strategy]{% else %}var.resource_group_name{% endif %}
+  location                 = {% if "reference" in terraform_module_type %}var.resource_names_map["storage_account"].region{% else %}var.location{% endif %}
   account_tier             = "Standard"
   account_replication_type = "LRS"
 

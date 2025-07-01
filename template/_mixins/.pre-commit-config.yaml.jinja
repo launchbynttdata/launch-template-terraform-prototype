@@ -5,12 +5,10 @@
       - id: terraform_validate
       - id: terraform_docs
         args:
-          - --hook-config=--path-to-file=README.md
-          - --hook-config=--add-to-existing-file=true
-          - --hook-config=--create-file-if-not-exist=true
-          - --args=--sort=false
+          - --args=--config=.terraform-docs.yml
   - repo: https://github.com/golangci/golangci-lint
-    rev: v1.55.2
+    # v2.2.1
+    rev: 66496a99757549ab02ffbadeea72d9eb9d387fc5 # pragma: allowlist secret
     hooks:
       - id: golangci-lint
         name: golangci-lint

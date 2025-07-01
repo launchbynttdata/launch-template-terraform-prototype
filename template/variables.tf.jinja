@@ -22,7 +22,7 @@ variable "resource_names_strategy" {
   type        = string
   description = "Strategy to use for generating resource names, taken from the outputs of the naming module, e.g. 'standard', 'minimal_random_suffix', 'dns_compliant_standard', etc."
   nullable    = false
-  default     = "standard"
+  default     = "minimal_random_suffix"
 }
 
 variable "logical_product_family" {
@@ -96,6 +96,26 @@ variable "bucket_name" {
   type        = string
   nullable    = false
 }
+{% elif "hashicorp/azurerm" in terraform_provider %}
+variable "storage_account_name" {
+  description = "Name of the Azure Storage Account to create."
+  type        = string
+  nullable    = false
+}
+
+variable "resource_group_name" {
+  description = "Name of the Azure Resource Group for the storage account."
+  type        = string
+  nullable    = false
+}
+
+variable "location" {
+  description = "Location for the storage account."
+  type        = string
+  nullable    = false
+  default     = "{{ terraform_provider_default_region[terraform_provider] }}"
+}
+{% elif "microsoft/azuredevops" in terraform_provider %}
 {% endif %}
 
 variable "tags" {

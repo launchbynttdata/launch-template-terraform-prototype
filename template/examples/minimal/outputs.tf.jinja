@@ -8,4 +8,12 @@ output "bucket_arn" {
 output "bucket_name" {
   value = module.parent.bucket_name
 }
+{% elif "hashicorp/azurerm" in terraform_provider %}
+output "resource_group_name" {
+  value = module.parent.resource_group_name
+}
+
+output "storage_account_name" {
+  value = module.parent.storage_account_name
+}
 {% endif %}
