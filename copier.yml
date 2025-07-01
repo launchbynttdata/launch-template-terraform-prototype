@@ -50,3 +50,8 @@ repo_name:
   type: str
   default: "tf-{{ terraform_provider }}-module_{{ terraform_module_type }}-{{ terraform_resource_name | lower | trim | replace('-', '_') | replace(' ', '_')}}"
   when: false
+
+terraform_version_major_minor:
+  type: str
+  default: "{{ terraform_version | split(".")[:2] | join (".") }}"
+  when: false
