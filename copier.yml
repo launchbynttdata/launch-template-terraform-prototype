@@ -17,14 +17,14 @@ _exclude:
 
 terraform_provider:
   type: str
-  default: "aws"
+  default: "hashicorp/aws"
   choices:
-    aws: "aws"
-    azurerm: "azurerm"
-    azuread: "azuread"
-    azuredevops: "azuredevops"
-    azapi: "azapi"
-    azurestack: "azurestack"
+    aws: "hashicorp/aws"
+    azurerm: "hashicorp/azurerm"
+    azuread: "hashicorp/azuread"
+    azuredevops: "microsoft/azuredevops"
+    azapi: "azure/azapi"
+    azurestack: "hashicorp/azurestack"
   description: "The Terraform provider to use for this module."
 
 terraform_module_type:
@@ -49,4 +49,22 @@ terraform_version:
 repo_name:
   type: str
   default: "tf-{{ terraform_provider }}-module_{{ terraform_module_type }}-{{ terraform_resource_name | lower | trim | replace('-', '_') | replace(' ', '_')}}"
+  when: false
+
+terraform_provider_version:
+  type: str
+  {% if terraform_provider == 'hashicorp/aws' %}
+  default: "5.0"
+  {% elif terraform_provider == 'hashicorp/azurerm' %}
+  default: "3.117"
+  {% elif terraform_provider == 'hashicorp/azuread' %}
+  default: "3.4"
+  {% elif terraform_provider == 'microsoft/azuredevops' %}
+  default: "1.10"
+  {% elif terraform_provider == 'azure/azapi' %}
+  default: "2.5"
+  {% elif terraform_provider == 'hashicorp/azurestack' %}
+  default: "1.0"
+  {% endif %}  
+  description: "The version of the {{terraform_provider}} provider to use for this module."
   when: false
