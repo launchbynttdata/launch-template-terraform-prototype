@@ -18,17 +18,17 @@ terraform {
       source  = "{{ terraform_provider }}"
       {%- if terraform_provider == 'hashicorp/aws' %}
       version = "~> 5.0"
-      {% elif terraform_provider == 'hashicorp/azurerm' %}
+      {%- elif terraform_provider == 'hashicorp/azurerm' %}
       version = "~> 3.117"
-      {% elif terraform_provider == 'hashicorp/azuread' %}
+      {%- elif terraform_provider == 'hashicorp/azuread' %}
       version = "~> 3.4"
-      {% elif terraform_provider == 'microsoft/azuredevops' %}
+      {%- elif terraform_provider == 'microsoft/azuredevops' %}
       version = "~> 1.10"
-      {% elif terraform_provider == 'azure/azapi' %}
+      {%- elif terraform_provider == 'azure/azapi' %}
       version = "~> 2.5"
-      {% elif terraform_provider == 'hashicorp/azurestack' %}
+      {%- elif terraform_provider == 'hashicorp/azurestack' %}
       version = "~> 1.0"
-      {% endif -%}
+      {%- endif %}
     }
   }
 }
