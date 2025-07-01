@@ -9,3 +9,37 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+{%- if "reference" not in terraform_module_type %}
+data "aws_region" "current" {}
+
+module "resource_names" {
+  source  = "terraform.registry.launch.nttdata.com/module_library/resource_name/launch"
+  version = "~> 2.0"
+
+  for_each = var.resource_names_map
+
+  region                  = join("", split("-", data.aws_region.current.name))
+  class_env               = var.class_env
+  cloud_resource_type     = each.value.name
+  instance_env            = var.instance_env
+  instance_resource       = var.instance_resource
+  maximum_length          = each.value.max_length
+  logical_product_family  = var.logical_product_family
+  logical_product_service = var.logical_product_service
+}
+{% endif %}
+
+module "parent" {
+  source = "../.."
+
+  # Populate source inputs here...
+{% if "reference" in terraform_module_type %}
+  class_env = var.class_env
+  instance_env = var.instance_env
+  instance_resource = var.instance_resource
+  logical_product_family = var.logical_product_family
+  logical_product_service = var.logical_product_service
+  resource_names_strategy = "minimal_random_suffix"
+{% endif %}  
+}

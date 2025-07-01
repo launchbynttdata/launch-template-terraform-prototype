@@ -43,7 +43,7 @@ terraform_resource_name:
 
 terraform_version:
   type: str
-  default: "1.5.5"
+  default: "1.10.3"
   description: "The version of Terraform to use for this module."
 
 repo_name:
@@ -53,5 +53,5 @@ repo_name:
 
 terraform_version_major_minor:
   type: str
-  default: "{{ terraform_version.split(".")[:2] | join(".") }}"
+  default: "{{ terraform_version.split('.')[:2] | join('.') }}"
   when: false
