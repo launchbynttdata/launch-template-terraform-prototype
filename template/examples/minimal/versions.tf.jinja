@@ -16,7 +16,19 @@ terraform {
   required_providers {
     aws = {
       source  = "{{ terraform_provider }}"
-      version = "~> {{ terraform_provider_version }}"
+      {%- if terraform_provider == 'hashicorp/aws' %}
+      version = "~> 5.0"
+      {% elif terraform_provider == 'hashicorp/azurerm' %}
+      version = "~> 3.117"
+      {% elif terraform_provider == 'hashicorp/azuread' %}
+      version = "~> 3.4"
+      {% elif terraform_provider == 'microsoft/azuredevops' %}
+      version = "~> 1.10"
+      {% elif terraform_provider == 'azure/azapi' %}
+      version = "~> 2.5"
+      {% elif terraform_provider == 'hashicorp/azurestack' %}
+      version = "~> 1.0"
+      {% endif %}
     }
   }
 }
