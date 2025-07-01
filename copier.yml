@@ -1,5 +1,15 @@
 _subdirectory: "template"
 _answers_file: ".copier-answers.yml"
+exclude:
+  - "copier.yaml"
+  - "copier.yml"
+  - "~*"
+  - "*.py[co]"
+  - "__pycache__"
+  - ".git"
+  - ".DS_Store"
+  - ".svn"
+  - "_mixins"
 
 terraform_provider:
   type: str
