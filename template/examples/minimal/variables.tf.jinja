@@ -9,7 +9,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+{% if "reference" not in terraform_module_type %}
 variable "resource_names_map" {
   description = "A map of key to resource_name that will be used by tf-launch-module_library-resource_name to generate resource names"
   type = map(object({
@@ -41,13 +41,12 @@ variable "logical_product_family" {
     Example: org_name, department_name.
   EOF
   nullable    = false
-  default = "launch"
+  default     = "launch"
 
   validation {
-    condition     = can(regex("^[A-Za-z0-9_]+$", var.logical_product_service))
+    condition     = can(regex("^[A-Za-z0-9_]+$", var.logical_product_family))
     error_message = "logical_product_family may only contain letters, numbers, and underscores"
   }
-
 }
 
 variable "logical_product_service" {
@@ -57,13 +56,12 @@ variable "logical_product_service" {
     For example, backend, frontend, middleware etc.
   EOF
   nullable    = false
-  default = "example"
+  default     = "example"
 
   validation {
     condition     = can(regex("^[A-Za-z0-9_]+$", var.logical_product_service))
     error_message = "logical_product_service may only contain letters, numbers, and underscores"
   }
-
 }
 
 variable "class_env" {
@@ -100,4 +98,11 @@ variable "instance_resource" {
     condition     = var.instance_resource >= 0 && var.instance_resource <= 100
     error_message = "instance_resource must be between 0 and 100, inclusive."
   }
+}
+{% endif %}
+
+variable "tags" {
+  description = "Map of tags to apply to this resource."
+  type        = map(string)
+  default     = {}
 }
