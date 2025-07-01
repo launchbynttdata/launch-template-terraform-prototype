@@ -1,6 +1,6 @@
 _subdirectory: "template"
 _answers_file: ".copier-answers.yml"
-exclude:
+_exclude:
   - "copier.yaml"
   - "copier.yml"
   - "~*"
