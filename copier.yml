@@ -45,3 +45,5 @@ terraform_version:
   type: str
   default: "1.5.5"
   description: "The version of Terraform to use for this module."
+
+repo_name: "tf-{{ terraform_provider }}-module_{{ terraform_module_type }}-{{ terraform_resource_name | lower | strip | replace('-', '_') | replace(' ', '_')}}"
