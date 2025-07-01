@@ -1,0 +1,11 @@
+{{ license_header }}
+
+{% if "hashicorp/aws" in terraform_provider %}
+output "bucket_arn" {
+  value = module.parent.bucket_arn
+}
+
+output "bucket_name" {
+  value = module.parent.bucket_name
+}
+{% endif %}

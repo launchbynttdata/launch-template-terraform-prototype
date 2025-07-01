@@ -1,15 +1,6 @@
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-{% if "reference" in terraform_module_type %}
+{{ license_header }}
+
+{% if "reference" in terraform_module_type -%}
 data "aws_region" "current" {}
 
 module "resource_names" {
@@ -27,20 +18,15 @@ module "resource_names" {
   logical_product_family  = var.logical_product_family
   logical_product_service = var.logical_product_service
 }
-{% endif %}
+{% endif -%}
 
-{% if "hashicorp/aws" in terraform_provider %}
+{% if "hashicorp/aws" in terraform_provider -%}
 resource "aws_s3_bucket" "example" {
-  bucket = module.resource_names["example"].resource_name
-  acl    = "private"
+  bucket = {% if "reference" in terraform_module_type %}module.resource_names["example"].resource_name{% else %}var.bucket_name{% endif %}
 
-  tags = {
-    Name        = module.resource_names["example"][resource_name_strategy]
-    Environment = var.instance_env
-    Product     = var.logical_product_family
-  }
+  tags = local.tags
 }
-{% elif "hashicorp/azure" in terraform_provider %}
+{% elif "hashicorp/azure" in terraform_provider -%}
 resource "azurerm_storage_account" "example" {
   name                     = module.resource_names["example"].resource_name
   resource_group_name      = var.resource_group_name
@@ -48,21 +34,13 @@ resource "azurerm_storage_account" "example" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
 
-  tags = {
-    Name        = module.resource_names["example"][resource_name_strategy]
-    Environment = var.instance_env
-    Product     = var.logical_product_family
-  }
+  tags = local.tags
 }
-{% elif "microsoft/azuredevops" in terraform_provider %}
-{% else %}
+{% elif "microsoft/azuredevops" in terraform_provider -%}
+{% else -%}
 resource "resource_type" "resource_name" {
   name = module.resource_names["example"][resource_name_strategy]
 
-  tags = {
-    Name        = module.resource_names["example"]["standard"]
-    Environment = var.instance_env
-    Product     = var.logical_product_family
-  }
+  tags = local.tags
 }
 {% endif %}

@@ -1,0 +1,51 @@
+{{ license_header }}
+package common
+
+{% if "hashicorp/aws" in terraform_provider -%}
+import (
+	"context"
+	"testing"
+
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"github.com/gruntwork-io/terratest/modules/terraform"
+	"github.com/launchbynttdata/lcaf-component-terratest/types"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+)
+
+func TestResource(t *testing.T, ctx types.TestContext) {
+	s3Client := GetAWSS3Client(t)
+	s3BucketList, err := s3Client.ListBuckets(context.TODO(), &s3.ListBucketsInput{})
+	if err != nil {
+		t.Errorf("Failure during ListBuckets: %v", err)
+	}
+
+	t.Run("TestDoesBucketExist", func(t *testing.T) {
+		bucket_name := terraform.Output(t, ctx.TerratestTerraformOptions(), "bucket_name")
+		bucket_found := false
+		for _, bucket := range s3BucketList.Buckets {
+			if *bucket.Name == bucket_name {
+				bucket_found = true
+				break
+			}
+		}
+		assert.True(t, bucket_found, "Bucket not found")
+	})
+}
+
+func GetAWSS3Client(t *testing.T) *s3.Client {
+	awsS3Client := s3.NewFromConfig(GetAWSConfig(t))
+	return awsS3Client
+}
+
+func GetAWSConfig(t *testing.T) (cfg aws.Config) {
+	cfg, err := config.LoadDefaultConfig(context.TODO())
+	require.NoErrorf(t, err, "unable to load SDK config, %v", err)
+	return cfg
+}
+
+{% else %}
+// TODO: Implement some tests!
+{% endif %}

@@ -27,6 +27,31 @@ terraform_provider:
     azurestack: "hashicorp/azurestack"
   description: "The Terraform provider to use for this module."
 
+terraform_provider_alias:
+  type: str
+  default: "{{ terraform_provider.split('/')[1] | trim | lower }}" # Extracts the provider alias from the full provider name (e.g., 'hashicorp/aws' -> 'aws')
+  when: false
+
+terraform_provider_version:
+  type: yaml
+  default: |
+    hashicorp/aws: "5.0"
+    hashicorp/azurerm: "3.117"
+    hashicorp/azuread: "3.4"
+    microsoft/azuredevops: "1.10"
+    azure/azapi: "2.5"
+    hashicorp/azurestack: "1.0"
+  description: "The version of the Terraform provider to use for this module. This is used with the pessimistic constraint operator, so you should omit the patch version (e.g., '5.0' instead of '5.0.1') to receive non-breaking updates."
+  when: false
+
+terraform_provider_default_region:
+  type: yaml
+  default: |
+    hashicorp/aws: "us-east-2"
+    hashicorp/azurerm: "eastus2"
+  description: "The default region for the Terraform provider, only used to generate the initial example module structure."
+  when: false
+
 terraform_module_type:
   type: str
   default: "primitive"
@@ -48,10 +73,32 @@ terraform_version:
 
 repo_name:
   type: str
-  default: "tf-{{ terraform_provider }}-module_{{ terraform_module_type }}-{{ terraform_resource_name | lower | trim | replace('-', '_') | replace(' ', '_')}}"
+  default: "tf-{{ terraform_provider_alias }}-module_{{ terraform_module_type }}-{{ terraform_resource_name | lower | trim | replace('-', '_') | replace(' ', '_')}}"
   when: false
 
 terraform_version_major_minor:
   type: str
   default: "{{ terraform_version.split('.')[:2] | join('.') }}"
+  when: false
+
+golang_version:
+  type: str
+  default: "1.22.10"
+  description: "The version of Go to use for this module's tests."
+  when: false
+
+license_header:
+  type: str
+  default: |-
+    // Licensed under the Apache License, Version 2.0 (the "License");
+    // you may not use this file except in compliance with the License.
+    // You may obtain a copy of the License at
+    //
+    //     http://www.apache.org/licenses/LICENSE-2.0
+    //
+    // Unless required by applicable law or agreed to in writing, software
+    // distributed under the License is distributed on an "AS IS" BASIS,
+    // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    // See the License for the specific language governing permissions and
+    // limitations under the License.
   when: false
