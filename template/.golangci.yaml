@@ -1,2 +1,4 @@
+version: "2"
 run:
   timeout: 5m # Timeout for analysis, e.g. 30s, 5m.
+  allow-parallel-runners: true

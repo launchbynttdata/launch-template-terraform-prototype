@@ -1,5 +1,5 @@
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.77.1
+    rev: 2f8bda194a420ad77a050a9de627d77a74841fdc # pragma: allowlist secret (v1.99.4)
     hooks:
       - id: terraform_fmt
       - id: terraform_validate
@@ -8,7 +8,7 @@
           - --args=--config=.terraform-docs.yml
   - repo: https://github.com/golangci/golangci-lint
     # v2.2.1
-    rev: 66496a99757549ab02ffbadeea72d9eb9d387fc5 # pragma: allowlist secret
+    rev: 66496a99757549ab02ffbadeea72d9eb9d387fc5 # pragma: allowlist secret (v2.2.1)
     hooks:
       - id: golangci-lint
         name: golangci-lint

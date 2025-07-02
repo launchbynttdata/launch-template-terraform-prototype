@@ -16,9 +16,9 @@ _exclude:
   - "_mixins"
 _tasks:
   - "terraform-docs ."
+  - "terraform-docs examples/minimal"
   - "git init"
   - "go mod tidy"
-  - "pre-commit install"
   - "make configure"
 
 terraform_provider:

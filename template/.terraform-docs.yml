@@ -6,3 +6,7 @@ output:
 
 sort:
   enabled: false
+
+sections:
+  hide:
+    - providers
