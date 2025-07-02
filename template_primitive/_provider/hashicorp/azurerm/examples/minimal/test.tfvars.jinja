@@ -1,13 +1,3 @@
-{% if "reference" not in terraform_module_type -%}
-{%  if "hashicorp/aws" in terraform_provider -%}
-resource_names_map = {
-  bucket = {
-    name        = "bucket"
-    max_length  = 64
-    region      = "{{ terraform_provider_default_region[terraform_provider] }}"
-  }
-}
-{%  elif "hashicorp/azurerm" in terraform_provider -%}
 resource_names_map = {
   storage_account = {
     name       = "sa"
@@ -20,9 +10,7 @@ resource_names_map = {
     region     = "{{ terraform_provider_default_region[terraform_provider] }}"
   }
 }
-{%  endif -%}
-{% endif -%}
-
 logical_product_family = "launch"
 logical_product_service = "example"
 class_env = "sandbox"
+resource_names_strategy = "minimal_random_suffix"

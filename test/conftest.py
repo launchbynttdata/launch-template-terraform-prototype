@@ -50,7 +50,9 @@ def random_directory_name(length: int = 10) -> str:
 def isolated_copy(tmpdir) -> Generator[Callable[[dict[str]], pathlib.Path], None, None]:
     src_path = pathlib.Path(__file__).parent.parent
 
-    def _isolated_copy(data: dict[str] = None) -> pathlib.Path:
+    def _isolated_copy(
+        data: dict[str] = None, skip_tasks: bool = False
+    ) -> pathlib.Path:
         """Run copier in an isolated output folder that will be cleaned up after the run."""
         dst_path = tmpdir.mkdir(random_directory_name())
 
@@ -58,7 +60,9 @@ def isolated_copy(tmpdir) -> Generator[Callable[[dict[str]], pathlib.Path], None
             src_path=str(src_path),
             dst_path=str(dst_path),
             data=data or {},
+            defaults=True,
             unsafe=True,
+            skip_tasks=skip_tasks,
         )
         return pathlib.Path(dst_path)
 

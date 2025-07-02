@@ -1,0 +1,5 @@
+resource "aws_s3_bucket" "example" {
+  bucket = module.resource_names["bucket"][var.resource_names_strategy]
+  
+  tags = local.tags
+}

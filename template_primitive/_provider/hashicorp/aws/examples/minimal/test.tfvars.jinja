@@ -1,0 +1,11 @@
+resource_names_map = {
+  bucket = {
+    name        = "bucket"
+    max_length  = 64
+    region      = "{{ terraform_provider_default_region[terraform_provider] }}"
+  }
+}
+logical_product_family = "launch"
+logical_product_service = "example"
+class_env = "sandbox"
+resource_names_strategy = "minimal_random_suffix"

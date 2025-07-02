@@ -18,6 +18,14 @@ addopts = "-ra"
 testpaths = [
     "test"
 ]
+markers = [
+    "requires_credentials: mark test as requiring credentials",
+    "aws: mark test as requiring AWS credentials",
+    "azure: mark test as requiring Azure credentials",
+]
+filterwarnings = [
+    "ignore::copier.errors.DirtyLocalWarning"
+]
 
 [tool.ruff]
 exclude = [
