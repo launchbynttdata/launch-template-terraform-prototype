@@ -1,0 +1,53 @@
+[project]
+name = "launch-template-terraform"
+version = "0.0.0"
+description = "terraform copier template for Launch's templating system"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "Apache 2.0"}
+dependencies = [
+    "copier>=9.7.1",
+    "jinja2-time>=0.2.0",
+    "pytest>=8.4.1",
+    "ruamel-yaml>=0.18.14",
+]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra"
+testpaths = [
+    "test"
+]
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    ".venv",
+    ".repo",
+    "components"
+]

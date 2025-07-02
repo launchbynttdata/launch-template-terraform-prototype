@@ -1,3 +1,4 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: 5f6f4f6
+_commit: 818e3ec
 _src_path: ../launch-template-base-prototype
+template_name: terraform
